@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="vi">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#080b09">
+	<title>{{ filename }} // simple-notes</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<div class="noise" aria-hidden="true"></div>
+	<main class="shell">
+		<header class="topbar">
+			<a class="brand" href="/" aria-label="Về trang chủ"><span class="brand-mark">&gt;_</span><span>simple-notes</span></a>
+			<div class="status"><span class="pulse"></span> READING MODE <span id="clock">--:--:--</span></div>
+		</header>
+
+		<nav class="breadcrumb reveal" aria-label="Điều hướng"><a href="/">vault</a><span>/</span><span>{{ filename }}</span></nav>
+		<article class="note-view reveal">
+			<div class="note-meta"><span class="file-icon">TXT</span><span>PLAIN TEXT NOTE</span><span class="meta-line"></span><span id="line-count">-- LINES</span></div>
+			<div class="note-title-row"><h1>{{ filename }}</h1><button class="copy-button" id="copy-note" type="button" data-copy-target="note-content"><span aria-hidden="true">[ ]</span> COPY</button></div>
+			<div class="note-content" id="note-content" tabindex="0">{{ content }}</div>
+		</article>
+		<footer class="footer"><a href="/">&lt;- ALL NOTES</a><span>ESC TO RETURN</span></footer>
+	</main>
+	<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

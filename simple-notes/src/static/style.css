@@ -1,0 +1,103 @@
+:root {
+    --bg: #080b09;
+    --panel: #0d120f;
+    --panel-soft: #101812;
+    --line: #203226;
+    --line-bright: #31553a;
+    --green: #9dff9e;
+    --green-soft: #64c969;
+    --muted: #759079;
+    --text: #d9f4d9;
+    --mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+    --display: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { min-width: 320px; background: var(--bg); }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    background: radial-gradient(circle at 85% 12%, rgba(39, 93, 49, .15), transparent 30rem), var(--bg);
+    font-family: var(--mono);
+}
+
+body::before {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .35;
+    background-image: linear-gradient(rgba(157, 255, 158, .025) 1px, transparent 1px);
+    background-size: 100% 4px;
+    content: "";
+}
+
+.noise { position: fixed; inset: 0; pointer-events: none; opacity: .05; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E"); }
+
+.shell { width: min(100% - 48px, 1000px); margin: 0 auto; padding: 28px 0 34px; }
+.topbar, .footer, .section-heading, .note-title-row, .note-meta { display: flex; align-items: center; justify-content: space-between; }
+.topbar { padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: 11px; color: var(--text); font: 700 15px var(--mono); text-decoration: none; letter-spacing: .04em; }
+.brand-mark { display: grid; width: 34px; height: 28px; place-items: center; color: var(--bg); background: var(--green); font-size: 13px; }
+.status, .eyebrow, .footer, .note-meta { color: var(--muted); font-size: 10px; letter-spacing: .13em; }
+.status { display: flex; align-items: center; gap: 10px; }
+.pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); }
+.hero { padding: 104px 0 86px; }
+.eyebrow { margin: 0 0 17px; color: var(--green-soft); }
+h1, h2 { margin: 0; font-family: var(--display); font-weight: 700; letter-spacing: -.04em; }
+h1 { color: var(--text); font-size: clamp(44px, 7vw, 76px); line-height: .98; }
+h1 span { color: var(--green); }
+.hero-copy { margin: 25px 0 0; color: var(--muted); font-size: 13px; line-height: 1.9; }
+.notes-section { padding-bottom: 90px; }
+.section-heading { margin-bottom: 23px; align-items: end; }
+h2 { font-size: 25px; }
+.count { margin-left: 8px; color: var(--green-soft); font: 11px var(--mono); vertical-align: middle; letter-spacing: .05em; }
+.search-box { display: flex; align-items: center; gap: 9px; width: 220px; padding: 10px 12px; border: 1px solid var(--line); color: var(--green-soft); background: var(--panel); }
+.search-box:focus-within { border-color: var(--green-soft); }
+.search-box input { width: 100%; border: 0; outline: 0; color: var(--text); background: transparent; font: 11px var(--mono); }
+.search-box input::placeholder { color: var(--muted); }
+.note-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.note-card { display: flex; align-items: center; gap: 16px; min-height: 95px; padding: 20px; border: 1px solid var(--line); color: var(--text); background: var(--panel); text-decoration: none; transition: border-color .2s, background .2s, transform .2s; }
+.note-card:hover, .note-card:focus-visible { border-color: var(--green-soft); outline: 0; background: var(--panel-soft); transform: translateY(-3px); }
+.file-icon { display: inline-grid; flex: 0 0 auto; width: 40px; height: 40px; place-items: center; border: 1px solid var(--line-bright); color: var(--green); font-size: 10px; }
+.card-body { display: grid; gap: 7px; flex: 1; }
+.card-body strong { font-size: 13px; font-weight: 500; }
+.card-body small { color: var(--muted); font-size: 10px; }
+.arrow { color: var(--green); font-size: 16px; }
+.empty-state { padding: 20px; border: 1px dashed var(--line-bright); color: var(--muted); font-size: 12px; }
+.footer { padding-top: 18px; border-top: 1px solid var(--line); }
+.footer a { color: var(--green-soft); text-decoration: none; }
+.footer a:hover { color: var(--green); }
+.breadcrumb { display: flex; gap: 12px; padding: 46px 0 26px; color: var(--muted); font-size: 11px; }
+.breadcrumb a { color: var(--green-soft); text-decoration: none; }
+.note-view { padding: 29px; border: 1px solid var(--line); background: rgba(13, 18, 15, .86); }
+.note-meta { display: flex; gap: 13px; }
+.note-meta .file-icon { width: 31px; height: 25px; }
+.meta-line { width: 1px; height: 15px; background: var(--line-bright); }
+.note-title-row { gap: 16px; margin: 32px 0 27px; }
+.note-title-row h1 { font-size: clamp(30px, 5vw, 50px); word-break: break-word; }
+.copy-button { flex: 0 0 auto; padding: 10px 13px; border: 1px solid var(--line-bright); color: var(--green); background: transparent; cursor: pointer; font: 10px var(--mono); letter-spacing: .08em; }
+.copy-button:hover, .copy-button:focus-visible { border-color: var(--green); background: rgba(157, 255, 158, .08); outline: 0; }
+.note-content { overflow-x: auto; min-height: 230px; padding: 28px 0 10px; border-top: 1px solid var(--line); color: var(--green); font: 14px/2 var(--mono); white-space: pre-wrap; word-break: break-word; }
+.note-content:focus { outline: 1px solid var(--line-bright); outline-offset: 8px; }
+.note-view + .footer { margin-top: 28px; }
+.reveal { animation: reveal .55s ease both; }
+.hero.reveal { animation-delay: .08s; }
+.notes-section.reveal, .note-view.reveal { animation-delay: .16s; }
+@keyframes reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 650px) {
+    .shell { width: min(100% - 28px, 1000px); padding-top: 18px; }
+    .status { font-size: 0; gap: 0; }
+    .status .pulse { width: 7px; height: 7px; }
+    .hero { padding: 76px 0 62px; }
+    .note-grid { grid-template-columns: 1fr; }
+    .section-heading { display: grid; gap: 20px; align-items: start; }
+    .search-box { width: 100%; }
+    .note-view { padding: 19px; }
+    .note-meta { flex-wrap: wrap; }
+    .note-title-row { align-items: start; flex-direction: column; }
+    .copy-button { align-self: start; }
+    .footer { align-items: start; flex-direction: column; gap: 10px; line-height: 1.5; }
+}

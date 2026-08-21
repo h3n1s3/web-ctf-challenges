@@ -1,0 +1,15 @@
+services:
+
+  simple-notes:
+    build: .
+    container_name: simple-notes
+    ports:
+      - "5000:5000"
+    environment:
+      FLAG: "KCSC{p4th_tr4vers4l_m4k3s_m3_cr1ng}"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    mem_limit: 128m

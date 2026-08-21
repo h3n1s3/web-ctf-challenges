@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="vi">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#080b09">
+	<title>simple-notes</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<div class="noise" aria-hidden="true"></div>
+	<main class="shell">
+		<header class="topbar">
+			<a class="brand" href="/" aria-label="Về trang chủ">
+				<span class="brand-mark">&gt;_</span>
+				<span>simple-notes</span>
+			</a>
+			<div class="status"><span class="pulse"></span> SYSTEM ONLINE <span id="clock">--:--:--</span></div>
+		</header>
+
+		<section class="hero reveal">
+			<p class="eyebrow">PERSONAL KNOWLEDGE VAULT / 01</p>
+			<h1>SIMPLE <span>NOTES</span></h1>
+			<p class="hero-copy">Một góc nhỏ để lưu lại những điều đáng nhớ.<br>Kiểm tra các ghi chú để tìm ra điều thú vị.</p>
+		</section>
+
+		<section class="notes-section reveal" aria-labelledby="notes-heading">
+			<div class="section-heading">
+				<div>
+					<p class="eyebrow">DIRECTORY</p>
+					<h2 id="notes-heading">Tất cả ghi chú <span class="count">02</span></h2>
+				</div>
+				<label class="search-box">
+					<span aria-hidden="true">/</span>
+					<input id="note-search" type="search" placeholder="Tìm ghi chú..." autocomplete="off">
+				</label>
+			</div>
+
+			<div class="note-grid" id="note-grid">
+				<a class="note-card" href="{{ url_for('read_note', file='welcome.txt') }}" data-note="welcome lời chào">
+					<span class="file-icon">TXT</span>
+					<span class="card-body"><strong>welcome.txt</strong><small>Lời chào đầu tiên</small></span>
+					<span class="arrow" aria-hidden="true">-&gt;</span>
+				</a>
+				<a class="note-card" href="{{ url_for('read_note', file='help.txt') }}" data-note="help trợ giúp hướng dẫn">
+					<span class="file-icon">TXT</span>
+					<span class="card-body"><strong>help.txt</strong><small>Một chút hướng dẫn</small></span>
+					<span class="arrow" aria-hidden="true">-&gt;</span>
+				</a>
+			</div>
+			<p class="empty-state" id="empty-state" hidden>Không tìm thấy ghi chú phù hợp.</p>
+		</section>
+
+		<footer class="footer"><span>LOCAL / PRIVATE / TEXT ONLY</span><span>v1.0.0</span></footer>
+	</main>
+	<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
