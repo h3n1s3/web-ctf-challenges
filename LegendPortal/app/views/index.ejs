@@ -1,0 +1,143 @@
+<%- include("partials/header", {
+    title: "Home",
+    user: user
+}) %>
+
+
+<section class="hero">
+    <div
+        class="hero-slide active"
+        data-hero-slide
+        style="background-image: url('https://images.unsplash.com/photo-1525201548942-d8732f6617a0?auto=format&fit=crop&w=1600&q=80');"
+    ></div>
+    <div
+        class="hero-slide"
+        data-hero-slide
+        style="background-image: url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1600&q=80');"
+    ></div>
+    <div
+        class="hero-slide"
+        data-hero-slide
+        style="background-image: url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=1600&q=80');"
+    ></div>
+
+    <div class="hero-content">
+        <h1>Nhật ký của một kẻ si tình</h1>
+        <p>
+            Những lưu bút vụng về, những ngày nỗ lực để bước gần hơn đến người mình thương.
+        </p>
+        <div class="hero-dots">
+            <button type="button" class="hero-dot active" data-hero-dot aria-label="Slide 1"></button>
+            <button type="button" class="hero-dot" data-hero-dot aria-label="Slide 2"></button>
+            <button type="button" class="hero-dot" data-hero-dot aria-label="Slide 3"></button>
+        </div>
+    </div>
+</section>
+
+<div class="card">
+
+    <h1>
+        Kho lưu bút
+    </h1>
+
+    <p>
+        Nơi cất giữ từng mảnh ký ức trên hành trình chạm tới crush.
+    </p>
+
+</div>
+
+<% if (createdPost) { %>
+
+    <div class="success">
+        Đã lưu thành công: "<%= createdPost.title %>".
+    </div>
+
+<% } %>
+
+<% if (reportedPostId) { %>
+
+    <div class="success">
+        Đã gửi báo cáo thành công.
+    </div>
+
+<% } %>
+
+
+<% if (!posts || posts.length === 0) { %>
+
+    <div class="card">
+
+        <p>
+            Chưa có lưu bút nào.
+        </p>
+
+    </div>
+
+<% } %>
+
+
+<% if (posts) { %>
+
+    <% posts.forEach(post => { %>
+
+        <div class="card">
+
+            <h2 class="post-title">
+
+                <a href="/posts/<%= post.id %>">
+
+                    <%= post.title %>
+
+                </a>
+
+            </h2>
+
+            <div class="meta">
+
+                Được viết bởi
+
+                <strong>
+                    <%= post.username || "unknown" %>
+                </strong>
+
+                ·
+
+                <%= post.created_at %>
+
+            </div>
+
+            <div class="card-actions">
+
+                <a href="/posts/<%= post.id %>">
+                    Mở lưu bút
+                </a>
+
+                <% if (user) { %>
+
+                    <form
+                        method="POST"
+                        action="/posts/<%= post.id %>/report"
+                    >
+                        <input
+                            type="hidden"
+                            name="next"
+                            value="/?reported=<%= post.id %>"
+                        >
+
+                        <button type="submit">
+                            Gửi cho bot
+                        </button>
+                    </form>
+
+                <% } %>
+
+            </div>
+
+        </div>
+
+    <% }) %>
+
+<% } %>
+
+
+<%- include("partials/footer") %>

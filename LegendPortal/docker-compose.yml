@@ -1,0 +1,84 @@
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: ctf-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 3000
+      DATABASE_PATH: /app/data/challenge.db
+      JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_SECRET: ${INTERNAL_SECRET}
+      ADMIN_SERVICE_URL: http://admin:4000
+      ADMIN_SERVICE_TOKEN: ${ADMIN_SERVICE_TOKEN}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    volumes:
+      - app_data:/app/data
+    networks:
+      - ctf-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:3000/health').then(res => { if (res.status !== 200) { process.exit(1); } }).catch(err => { process.exit(1); });"
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  bot:
+    build:
+      context: ./bot
+      dockerfile: Dockerfile
+    container_name: ctf-bot
+    restart: unless-stopped
+
+    environment:
+      APP_ORIGIN: http://app:3000
+      INTERNAL_SECRET: ${INTERNAL_SECRET}
+      POLL_INTERVAL_MS: ${POLL_INTERVAL_MS:-3000}
+      VISIT_TIMEOUT_MS: ${VISIT_TIMEOUT_MS:-10000}
+    depends_on:
+      app:
+        condition: service_healthy
+      admin:
+        condition: service_healthy
+    networks:
+      - ctf-network
+    shm_size: 1gb
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    container_name: ctf-admin
+    restart: unless-stopped
+    environment:
+      PORT: 4000
+      FLAG: ${FLAG}
+      ADMIN_SERVICE_TOKEN: ${ADMIN_SERVICE_TOKEN}
+    networks:
+      - ctf-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:4000/health').then(res => { if (res.status !== 200) { process.exit(1); } }).catch(err => { process.exit(1); });"
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  app_data:
+
+networks:
+  ctf-network:
+    driver: bridge

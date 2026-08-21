@@ -1,0 +1,9 @@
+<%- include('partials/header', { title: '403 Forbidden', user: user }) %>
+
+<div class="card">
+  <h1>403 - Chưa đủ dũng khí</h1>
+  <p><%= error || 'Bạn chưa mở được cánh cửa này.' %></p>
+  <p><a href="/">Trở về hành trình</a></p>
+</div>
+
+<%- include('partials/footer') %>

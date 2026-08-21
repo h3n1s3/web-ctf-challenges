@@ -1,0 +1,58 @@
+<%- include("partials/header", {
+    title: "Tin nhắn của kẻ si tình",
+    user: user
+}) %>
+
+
+<div class="card">
+
+    <h1>Viết một lưu bút mới</h1>
+
+
+    <% if (error) { %>
+
+        <div class="error">
+            <%= error %>
+        </div>
+
+    <% } %>
+
+
+    <form
+        method="POST"
+        action="/posts"
+    >
+
+        <label>
+            Tiêu đề
+        </label>
+
+        <input
+            type="text"
+            name="title"
+            maxlength="120"
+            required
+        >
+
+
+        <label>
+            Nội dung
+        </label>
+
+        <textarea
+            name="content"
+            maxlength="10000"
+            required
+        ></textarea>
+
+
+        <button type="submit">
+            Lưu lại
+        </button>
+
+    </form>
+
+</div>
+
+
+<%- include("partials/footer") %>

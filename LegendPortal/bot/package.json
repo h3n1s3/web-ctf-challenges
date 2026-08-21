@@ -1,0 +1,13 @@
+{
+  "name": "ctf-reviewer-bot",
+  "version": "1.0.0",
+  "private": true,
+  "main": "bot.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "playwright": "1.55.0"
+  }
+}

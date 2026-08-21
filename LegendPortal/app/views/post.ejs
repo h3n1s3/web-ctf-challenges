@@ -1,0 +1,86 @@
+<%- include("partials/header", {
+    title: post.title,
+    user: user
+}) %>
+
+
+<div class="card">
+
+    <h1>
+        <%= post.title %>
+    </h1>
+
+
+    <div class="meta">
+
+        Được viết bởi
+
+        <strong>
+            <%= post.username || "unknown" %>
+        </strong>
+
+        ·
+
+        <%= post.created_at %>
+
+    </div>
+
+
+    <!-- Intentionally rendered as HTML for the stored-XSS challenge. -->
+    <div class="post-content"><%- post.content %></div>
+
+</div>
+
+<% if (reported) { %>
+
+    <div class="success">
+        Đã gửi báo cáo thành công.
+    </div>
+
+<% } %>
+
+
+<% if (user) { %>
+
+    <div class="card">
+
+        <h3>
+            Gửi lưu bút này cho bot trước khi bot gửi cho crush nhé.
+        </h3>
+
+        <p>
+            Bot sẽ ghé thăm và kiểm tra nội dung thay bạn.
+        </p>
+
+        <form
+            method="POST"
+            action="/posts/<%= post.id %>/report"
+        >
+            <input
+                type="hidden"
+                name="next"
+                value="/posts/<%= post.id %>?reported=1"
+            >
+
+            <button type="submit">
+                Báo cáo
+            </button>
+
+        </form>
+
+    </div>
+
+<% } %>
+
+<% if (!user) { %>
+
+    <div class="card">
+        <p>
+            Hãy <a href="/login">đăng nhập</a> để gửi báo cáo.
+        </p>
+    </div>
+
+<% } %>
+
+
+<%- include("partials/footer") %>

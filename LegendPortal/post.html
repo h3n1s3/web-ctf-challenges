@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>1</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f5f5f5;
+
+            color: #222;
+        }
+
+        nav {
+            background: #111;
+
+            color: white;
+
+            padding: 15px 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+
+            text-decoration: none;
+
+            margin-left: 18px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .brand {
+            font-weight: bold;
+
+            font-size: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+
+            border: 1px solid #ddd;
+
+            border-radius: 6px;
+
+            padding: 24px;
+
+            margin-bottom: 20px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            padding: 10px;
+
+            margin-top: 6px;
+
+            margin-bottom: 18px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 4px;
+        }
+
+        textarea {
+            min-height: 180px;
+
+            resize: vertical;
+        }
+
+        button {
+            background: #111;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 4px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        .error {
+            color: #b00020;
+
+            background: #ffe8ec;
+
+            padding: 12px;
+
+            border-radius: 4px;
+
+            margin-bottom: 18px;
+        }
+
+        .success {
+            color: #145c2e;
+
+            background: #e6f7ec;
+
+            padding: 12px;
+
+            border-radius: 4px;
+
+            margin-bottom: 18px;
+        }
+
+        .meta {
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .post-content {
+            margin-top: 20px;
+
+            line-height: 1.6;
+        }
+
+        .post-title a {
+            color: #222;
+
+            text-decoration: none;
+        }
+
+        .post-title a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+
+    <div>
+        <a
+            class="brand"
+            href="/"
+        >
+            CTF Blog
+        </a>
+    </div>
+
+    <div>
+
+        
+
+            <a href="/posts/create">
+                Create Post
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        
+
+    </div>
+
+</nav>
+
+<div class="container">
+
+
+<div class="card">
+
+    <h1>
+        1
+    </h1>
+
+
+    <div class="meta">
+
+        Posted by
+
+        <strong>
+            hehe
+        </strong>
+
+        ·
+
+        2026-08-21 13:24:38
+
+    </div>
+
+
+    <div class="post-content">
+
+        1
+
+    </div>
+
+</div>
+
+
+
+
+
+
+    <div class="card">
+
+        <h3>
+            Report this post
+        </h3>
+
+        <p>
+            Report inappropriate content to our moderators.
+        </p>
+
+        <form
+            method="POST"
+            action="/posts/3/report"
+        >
+
+            <button type="submit">
+                Report
+            </button>
+
+        </form>
+
+    </div>
+
+
+
+
+</div>
+
+</body>
+
+</html>

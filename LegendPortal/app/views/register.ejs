@@ -1,0 +1,64 @@
+<%- include("partials/header", {
+    title: "Register",
+    user: user
+}) %>
+
+
+<div class="card">
+
+    <h1>
+        Tạo tài khoản mới
+    </h1>
+
+
+    <% if (typeof error !== "undefined" && error) { %>
+
+        <div class="error">
+
+            <%= error %>
+
+        </div>
+
+    <% } %>
+
+
+    <form
+        method="POST"
+        action="/register"
+    >
+
+        <label>
+            Tài khoản
+        </label>
+
+        <input
+            type="text"
+            name="username"
+            minlength="3"
+            maxlength="32"
+            required
+        >
+
+
+        <label>
+            Mật khẩu
+        </label>
+
+        <input
+            type="password"
+            name="password"
+            minlength="6"
+            required
+        >
+
+
+        <button type="submit">
+            Đăng ký
+        </button>
+
+    </form>
+
+</div>
+
+
+<%- include("partials/footer") %>

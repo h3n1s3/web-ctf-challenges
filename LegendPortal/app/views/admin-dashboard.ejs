@@ -1,0 +1,33 @@
+<%- include('partials/header', { title: 'Admin Dashboard', user: user }) %>
+
+<%
+const roleLabel = user.role === 'admin'
+  ? 'LỐP PHÓ'
+  : (user.role === 'superadmin' ? 'LỐP TRƯỞNG' : user.role);
+%>
+
+<div class="card">
+  <h1>Bí kíp tán gái</h1>
+  <p>Chào mừng, <strong><%= user.username %></strong>. Vai trò: <span class="role-badge"><%= roleLabel %></span></p>
+  <p class="vault-value">Đây là những bí kíp giúp bạn có danh phận với crush.</p>
+
+  <div class="dashboard-grid">
+    <section class="dashboard-card unlock-card" data-unlock-card>
+      <div class="unlock-icon" aria-hidden="true">🔒</div>
+      <h2>Bí kíp thành lốp trưởng</h2>
+      <p>Crush hint cho bạn một mật mã, đèn xanh đang bật sao bạn hãy tận dụng cơ hội này!!!</p>
+      <p class="lock-state">Đang khóa</p>
+      <a href="/admin/secret" data-unlock-link>Mở khóa bí mật</a>
+    </section>
+
+    <section class="dashboard-card unlock-card" data-unlock-card>
+      <div class="unlock-icon" aria-hidden="true">🔒</div>
+      <h2>Lời tỏ tình cuối</h2>
+      <p>Chỉ khi làm lốp trưởng bạn mới có can đảm tỏ tình với crush <3 </p>
+      <p class="lock-state">Đang khóa</p>
+      <a href="/admin/flag" data-unlock-link>Tỏ tình</a>
+    </section>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

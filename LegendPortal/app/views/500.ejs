@@ -1,0 +1,9 @@
+<%- include('partials/header', { title: '500 Internal Server Error', user: user }) %>
+
+<div class="card">
+  <h1>500 - Tim lỡ một nhịp</h1>
+  <p><%= error || 'Hệ thống đang bối rối một chút, thử lại sau nhé.' %></p>
+  <p><a href="/">Trở về hành trình</a></p>
+</div>
+
+<%- include('partials/footer') %>

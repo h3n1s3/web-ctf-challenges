@@ -1,0 +1,17 @@
+<%- include('partials/header', { title: 'Flag Vault', user: user }) %>
+
+<%
+const roleLabel = user.role === 'admin'
+  ? 'LỐP PHÓ'
+  : (user.role === 'superadmin' ? 'LỐP TRƯỞNG' : user.role);
+%>
+
+<div class="card">
+  <h1>Ồ không, crush đã từ chối :< <br>Nhưng khum sao bạn đã có được flag hehehe</h1>
+  <p>Vai trò hiện tại: <span class="role-badge"><%= roleLabel %></span></p>
+  <code class="secret"><%= flag %></code>
+  <p>FROM CRUSH <3 </p>
+  <p><a href="/admin/dashboard">Quay lại tu luyện thêm</a></p>
+</div>
+
+<%- include('partials/footer') %>
