@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#03070d">
+	<title>DNSGUARD // Scan Result</title>
+	<style>
+		:root { --bg: #03070d; --panel: #07131e; --line: #12324a; --blue: #36b9ff; --cyan: #b0efff; --muted: #5e8298; --green: #66f2ae; --red: #ff577b; }
+		* { box-sizing: border-box; } body { margin: 0; min-height: 100vh; color: var(--cyan); background: var(--bg); font-family: "Courier New", monospace; } body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .16; background-image: linear-gradient(rgba(54,185,255,.14) 1px, transparent 1px), linear-gradient(90deg, rgba(54,185,255,.14) 1px, transparent 1px); background-size: 42px 42px; }
+		.shell { position: relative; z-index: 1; width: min(1000px, calc(100% - 32px)); margin: auto; padding: 28px 0 64px; } header { display: flex; justify-content: space-between; padding-bottom: 24px; border-bottom: 1px solid var(--line); } .brand { color: var(--blue); font-weight: bold; letter-spacing: .14em; } .brand span { color: var(--muted); font-weight: normal; } .status { color: var(--green); font-size: 11px; letter-spacing: .1em; }
+		.status::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); } .crumb { color: var(--muted); font-size: 11px; letter-spacing: .18em; margin: 50px 0 12px; } h1 { color: var(--blue); font-size: clamp(28px, 5vw, 52px); letter-spacing: -.05em; margin: 0 0 32px; } .target { color: var(--cyan); }
+		.grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 18px; } .panel { border: 1px solid var(--line); background: rgba(7,19,30,.86); } .panel-head { display: flex; justify-content: space-between; gap: 14px; border-bottom: 1px solid var(--line); padding: 14px 16px; color: var(--muted); font-size: 11px; letter-spacing: .12em; } .panel-body { padding: 18px 16px; }
+		.state { color: {% if sanitized %}var(--red){% else %}var(--green){% endif %}; font-weight: bold; } .meta { display: grid; gap: 17px; } .meta-row { display: flex; justify-content: space-between; gap: 20px; font-size: 12px; } .meta-row span:first-child { color: var(--muted); } .meta-row span:last-child { color: var(--cyan); text-align: right; word-break: break-word; } pre { margin: 0; min-height: 180px; overflow: auto; color: var(--cyan); font: 13px/1.65 "Courier New", monospace; white-space: pre-wrap; word-break: break-word; } .terminal-line { color: var(--blue); margin-bottom: 12px; } .terminal-line::before { content: "> "; color: var(--green); }
+		.actions { display: flex; gap: 10px; margin-top: 22px; } a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 17px; color: #001018; background: var(--blue); font-size: 11px; font-weight: bold; letter-spacing: .08em; text-decoration: none; } a:hover { background: var(--cyan); } a.secondary { color: var(--blue); border: 1px solid var(--blue); background: transparent; } a.secondary:hover { color: #001018; background: var(--blue); }
+		@media (max-width: 700px) { .shell { padding-top: 20px; } header { padding-bottom: 18px; } .status { font-size: 0; } .status::before { margin-right: 0; } .crumb { margin-top: 35px; } .grid { grid-template-columns: 1fr; } .meta-row { align-items: flex-start; } }
+	</style>
+</head>
+<body>
+	<div class="shell">
+		<header><div class="brand">DNSGUARD <span>// RADAR-SCAN</span></div><div class="status">SCAN COMPLETE</div></header>
+		<p class="crumb">NETWORK INTELLIGENCE / RESULT</p>
+		<h1>SCAN REPORT: <span class="target">{{ domain or 'UNKNOWN' }}</span></h1>
+		<div class="grid">
+			<section class="panel"><div class="panel-head"><span>TARGET PROFILE</span><span>LIVE</span></div><div class="panel-body"><div class="meta"><div class="meta-row"><span>HOSTNAME</span><span>{{ domain or 'N/A' }}</span></div><div class="meta-row"><span>METHOD</span><span>GETENT HOSTS</span></div><div class="meta-row"><span>FILTER STATUS</span><span class="state">{% if sanitized %}INPUT ALTERED{% else %}CLEAN{% endif %}</span></div><div class="meta-row"><span>PROBE STATUS</span><span class="state" style="color: var(--green)">RETURNED</span></div></div></div></section>
+			<section class="panel"><div class="panel-head"><span>RESOLUTION STREAM</span><span>STDOUT + STDERR</span></div><div class="panel-body"><div class="terminal-line">getent hosts {{ domain or 'target' }}</div><pre>{{ output }}</pre></div></section>
+		</div>
+		<div class="actions"><a href="/">NEW SCAN</a><a class="secondary" href="/health">SYSTEM HEALTH</a></div>
+	</div>
+</body>
+</html>

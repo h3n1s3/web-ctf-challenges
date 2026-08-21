@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#03070d">
+	<title>DNSGUARD</title>
+	<style>
+		:root { --bg: #03070d; --panel: rgba(5, 16, 27, .82); --line: #12324a; --blue: #36b9ff; --cyan: #83e7ff; --muted: #5e8298; --danger: #ff577b; }
+		* { box-sizing: border-box; }
+		body { margin: 0; min-height: 100vh; color: var(--cyan); background: var(--bg); font-family: "Courier New", monospace; overflow-x: hidden; }
+		body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .18; background-image: linear-gradient(rgba(54,185,255,.14) 1px, transparent 1px), linear-gradient(90deg, rgba(54,185,255,.14) 1px, transparent 1px); background-size: 42px 42px; mask-image: linear-gradient(to bottom, black, transparent 86%); }
+		.shell { width: min(1120px, calc(100% - 40px)); margin: auto; min-height: 100vh; position: relative; z-index: 1; }
+		header { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--line); letter-spacing: .14em; }
+		.brand { color: var(--blue); font-weight: 700; font-size: 16px; } .brand span { color: var(--muted); font-weight: 400; }
+		.status { color: #66f2ae; font-size: 11px; } .status::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: #66f2ae; box-shadow: 0 0 12px #66f2ae; }
+		main { display: grid; grid-template-columns: minmax(300px, 1fr) minmax(320px, .86fr); gap: 72px; align-items: center; min-height: calc(100vh - 91px); padding: 56px 0 72px; }
+		.eyebrow { color: var(--muted); font-size: 11px; letter-spacing: .22em; margin: 0 0 18px; } h1 { color: var(--blue); font-size: clamp(38px, 6vw, 76px); line-height: .95; letter-spacing: -.06em; margin: 0 0 24px; } h1 em { color: var(--cyan); font-style: normal; }
+		.intro { max-width: 520px; color: #82a6ba; font-size: 14px; line-height: 1.8; margin-bottom: 38px; }
+		.search-box { border: 1px solid var(--line); background: var(--panel); padding: 7px; box-shadow: 0 0 42px rgba(0, 119, 190, .1); }
+		.search-box form { display: flex; gap: 8px; } label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+		input { min-width: 0; flex: 1; border: 0; outline: 0; padding: 17px 14px; color: var(--cyan); background: #07131e; font: inherit; } input::placeholder { color: #3d6175; }
+		button { border: 0; padding: 0 22px; color: #001018; background: var(--blue); font: 700 12px "Courier New", monospace; letter-spacing: .08em; cursor: pointer; transition: background .2s, box-shadow .2s; } button:hover { background: var(--cyan); box-shadow: 0 0 22px rgba(54,185,255,.45); } button:disabled { opacity: .65; cursor: wait; }
+		.microcopy { color: #426479; font-size: 10px; letter-spacing: .08em; margin-top: 12px; }
+		.radar-wrap { display: grid; place-items: center; min-height: 430px; position: relative; } .radar { width: min(390px, 78vw); aspect-ratio: 1; border: 1px solid #1c6387; border-radius: 50%; position: relative; overflow: hidden; background: radial-gradient(circle, rgba(29,137,185,.13) 0 2px, transparent 3px), radial-gradient(circle, rgba(12,72,99,.18), transparent 68%); box-shadow: 0 0 44px rgba(0,133,204,.12), inset 0 0 45px rgba(0,133,204,.1); }
+		.radar::before, .radar::after { content: ""; position: absolute; border: 1px solid rgba(54,185,255,.42); border-radius: 50%; inset: 17%; } .radar::after { inset: 34%; }
+		.cross-x, .cross-y { position: absolute; background: rgba(54,185,255,.28); } .cross-x { height: 1px; left: 0; right: 0; top: 50%; } .cross-y { width: 1px; top: 0; bottom: 0; left: 50%; }
+		.sweep { position: absolute; width: 50%; height: 1px; top: 50%; left: 50%; transform-origin: left center; background: linear-gradient(90deg, var(--cyan), transparent); box-shadow: 0 0 11px var(--blue); animation: sweep 3.8s linear infinite; } .sweep::after { content: ""; position: absolute; right: 0; top: -90px; width: 180px; height: 180px; transform: rotate(-45deg); transform-origin: bottom right; background: linear-gradient(135deg, rgba(54,185,255,.18), transparent 55%); }
+		.blip { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 14px 4px rgba(54,185,255,.7); animation: pulse 2.2s infinite; } .b1 { top: 29%; left: 65%; } .b2 { top: 67%; left: 31%; animation-delay: .7s; } .b3 { top: 43%; left: 78%; animation-delay: 1.4s; }
+		.radar-label { position: absolute; font-size: 10px; color: #477f99; } .label-top { top: 9%; } .label-bottom { bottom: 9%; } .label-left { left: 6%; } .label-right { right: 6%; }
+		@keyframes sweep { to { transform: rotate(360deg); } } @keyframes pulse { 0%, 100% { opacity: .3; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.35); } }
+		@media (max-width: 760px) { .shell { width: min(100% - 28px, 560px); } header { padding: 20px 0; } main { display: flex; flex-direction: column-reverse; gap: 22px; align-items: stretch; padding-top: 28px; } .radar-wrap { min-height: auto; } .radar { width: min(300px, 75vw); } h1 { font-size: 48px; } .search-box form { flex-direction: column; } button { min-height: 48px; } }
+	</style>
+</head>
+<body>
+	<div class="shell">
+		<header><div class="brand">DNSGUARD <span>// RADAR-SCAN</span></div><div class="status">SYSTEM ONLINE</div></header>
+		<main>
+			<section>
+				<p class="eyebrow">NETWORK INTELLIGENCE / 001</p>
+				<h1>SCAN<br><em>THE SIGNAL.</em></h1>
+				<p class="intro">Hãy ném cho tôi domain tôi sẽ kiểm tra nó -_- <br>
+                    Ví dụ: <code>example.com</code> hoặc <code>facebook.com</code>
+                </p>
+				<div class="search-box">
+					<form action="/lookup" method="post" id="scan-form">
+						<label for="domain">Target hostname</label><input id="domain" name="domain" type="text" placeholder="google.com" autocomplete="off" required>
+						<button type="submit" id="scan-button">SCAN</button>
+					</form>
+				</div>
+				<div class="microcopy">READY FOR INPUT <span id="cursor">_</span> &nbsp;|&nbsp; TIMEOUT WINDOW: 05.0s</div>
+			</section>
+			<section class="radar-wrap" aria-label="Live radar visualization">
+				<div class="radar"><i class="cross-x"></i><i class="cross-y"></i><i class="sweep"></i><i class="blip b1"></i><i class="blip b2"></i><i class="blip b3"></i><span class="radar-label label-top">N 00.00</span><span class="radar-label label-bottom">S 00.00</span><span class="radar-label label-left">W 00.00</span><span class="radar-label label-right">E 00.00</span></div>
+			</section>
+		</main>
+	</div>
+	<script>
+		const form = document.getElementById('scan-form');
+		const button = document.getElementById('scan-button');
+		const cursor = document.getElementById('cursor');
+		setInterval(() => { cursor.textContent = cursor.textContent ? '' : '_'; }, 520);
+		form.addEventListener('submit', () => { button.disabled = true; button.textContent = 'SCANNING...'; });
+	</script>
+</body>
+</html>

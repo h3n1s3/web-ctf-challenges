@@ -1,0 +1,21 @@
+services:
+
+  dnsguard:
+    build: .
+    container_name: dnsguard
+    ports:
+      - "8000:8000"
+    environment:
+      FLAG: "KCSC{c0m4nd_1nject10n_but_bl4ckl1st3d}"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETUID
+      - SETGID
+    mem_limit: 128m
